@@ -8,8 +8,8 @@ import os
 import tkinter as tk
 from unittest.mock import patch, MagicMock
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from mov2gif.file_selector import FileSelector
+from mov2gif.app_logger import AppLogger
 
 
 class TestFileSelector(unittest.TestCase):
@@ -17,7 +17,8 @@ class TestFileSelector(unittest.TestCase):
 
     def setUp(self):
         """テスト実行前の準備"""
-        self.file_selector = FileSelector()
+        self.mock_logger = MagicMock(spec=AppLogger)
+        self.file_selector = FileSelector(self.mock_logger)
 
     @patch("tkinter.filedialog.askopenfilename")
     def test_show_dialog_file_selected(self, mock_askopenfilename):
@@ -36,7 +37,10 @@ class TestFileSelector(unittest.TestCase):
         # filetypes引数が正しく設定されていることを確認
         args, kwargs = mock_askopenfilename.call_args
         self.assertIn("filetypes", kwargs)
-        self.assertTrue(any("mov" in ft[1].lower() for ft in kwargs["filetypes"]))
+        self.assertTrue(any("mov" in str(ft).lower() for ft in kwargs["filetypes"]))
+
+        # ロガーが呼び出されたことを確認
+        self.mock_logger.info.assert_called_once()
 
     @patch("tkinter.filedialog.askopenfilename")
     def test_show_dialog_cancelled(self, mock_askopenfilename):
@@ -50,6 +54,11 @@ class TestFileSelector(unittest.TestCase):
         # 検証 - 空文字が返されること
         self.assertEqual(result, "")
         mock_askopenfilename.assert_called_once()
+
+        # ロガーが呼び出されたことを確認
+        self.mock_logger.info.assert_called_once_with(
+            "ファイル選択がキャンセルされました"
+        )
 
     @patch("tkinter.Tk")
     @patch("tkinter.filedialog.askopenfilename")

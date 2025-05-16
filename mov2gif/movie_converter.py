@@ -11,7 +11,7 @@ from mov2gif.app_logger import AppLogger
 
 class MovieConverter:
     """
-    MOV動画ファイルをGIFに変換するクラス
+    動画ファイルをGIFに変換するクラス
     """
 
     def __init__(self, logger: AppLogger):
@@ -24,10 +24,10 @@ class MovieConverter:
         self, input_path: str, output_path: Optional[str] = None
     ) -> bool:
         """
-        単一のMOVファイルをGIFに変換する
+        単一の動画ファイルをGIFに変換する
 
         Args:
-            input_path (str): 入力MOVファイルのパス
+            input_path (str): 入力動画ファイルのパス
             output_path (str, optional): 出力GIFファイルのパス。未指定の場合は入力ファイルと同じ場所に同名で保存
 
         Returns:
@@ -47,7 +47,6 @@ class MovieConverter:
             clip.write_gif(
                 output_path,
                 fps=15,  # フレームレートを15fpsに設定
-                opt="OptimizeTransparency",  # 透明度最適化
             )
 
             # クリップを閉じる（リソース解放）
@@ -62,10 +61,10 @@ class MovieConverter:
 
     def batch_convert(self, file_paths: List[str]) -> Dict[str, bool]:
         """
-        複数のMOVファイルを一括でGIFに変換する
+        複数の動画ファイルを一括でGIFに変換する
 
         Args:
-            file_paths (List[str]): 変換対象のMOVファイルパスのリスト
+            file_paths (List[str]): 変換対象の動画ファイルパスのリスト
 
         Returns:
             Dict[str, bool]: 変換結果の辞書 {ファイルパス: 成功/失敗}

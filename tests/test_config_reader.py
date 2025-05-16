@@ -7,10 +7,10 @@ import os
 import sys
 import tempfile
 from pathlib import Path
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from unittest.mock import MagicMock
 
 from mov2gif.config_reader import ConfigReader
+from mov2gif.app_logger import AppLogger
 
 
 class TestConfigReader(unittest.TestCase):
@@ -18,7 +18,8 @@ class TestConfigReader(unittest.TestCase):
 
     def setUp(self):
         """テスト実行前の準備"""
-        self.config_reader = ConfigReader()
+        self.mock_logger = MagicMock(spec=AppLogger)
+        self.config_reader = ConfigReader(self.mock_logger)
         # 一時ファイルを作成するためのテンポラリディレクトリ
         self.temp_dir = tempfile.TemporaryDirectory()
 
@@ -70,6 +71,9 @@ class TestConfigReader(unittest.TestCase):
         self.assertEqual(len(file_paths), 0)
         self.assertEqual(file_paths, [])
 
+        # ロガーが呼び出されたことを確認
+        self.mock_logger.warning.assert_called_once()
+
     def test_read_config_invalid_format(self):
         """異常系: 設定ファイルのフォーマットが不正な場合"""
         # テスト用の一時設定ファイル作成（不正なフォーマット）
@@ -84,6 +88,9 @@ class TestConfigReader(unittest.TestCase):
         # 検証 - フォーマットが不正でも空のリストを返すこと
         self.assertEqual(len(file_paths), 0)
         self.assertEqual(file_paths, [])
+
+        # ロガーが呼び出されたことを確認
+        self.mock_logger.warning.assert_called_once()
 
 
 if __name__ == "__main__":

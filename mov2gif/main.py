@@ -19,7 +19,7 @@ def main():
     4. 結果を表示
     """
     logger = AppLogger()
-    logger.info("mov2gif - MOV動画をGIFに変換")
+    logger.info("mov2gif - MOV動画もしくはMP4をGIFに変換")
 
     config_reader = ConfigReader(logger)
     file_selector = FileSelector(logger)

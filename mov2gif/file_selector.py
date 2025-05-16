@@ -33,8 +33,12 @@ class FileSelector:
 
             # ファイル選択ダイアログを表示
             file_path = filedialog.askopenfilename(
-                title="変換するMOVファイルを選択",
-                filetypes=[("MOV動画ファイル", "*.mov"), ("すべてのファイル", "*.*")],
+                title="変換するMOVファイル、MP4ファイルを選択",
+                filetypes=(
+                    ("MOV files", "*.mov"),
+                    ("MP4 files", "*.mp4"),
+                    ("All files", "*.*"),
+                ),
             )
 
             # tkinterのルートウィンドウを破棄
