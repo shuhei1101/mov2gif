@@ -2,14 +2,11 @@
 MOV形式の動画をGIF形式に変換するためのモジュール
 """
 
-import os
-import logging
 from pathlib import Path
 from typing import Dict, List, Optional
-import moviepy.editor
+from moviepy import VideoFileClip
 
-# ロガーの設定
-logger = logging.getLogger(__name__)
+from mov2gif.app_logger import AppLogger
 
 
 class MovieConverter:
@@ -17,11 +14,11 @@ class MovieConverter:
     MOV動画ファイルをGIFに変換するクラス
     """
 
-    def __init__(self):
+    def __init__(self, logger: AppLogger):
         """
         MovieConverterのコンストラクタ
         """
-        pass
+        self.logger = logger
 
     def convert_to_gif(
         self, input_path: str, output_path: Optional[str] = None
@@ -41,7 +38,7 @@ class MovieConverter:
             if output_path is None:
                 output_path = str(Path(input_path).with_suffix(".gif"))
 
-            logger.info(f"変換開始: {input_path} -> {output_path}")
+            self.logger.info(f"変換開始: {input_path} -> {output_path}")
 
             # MoviePyを使用して変換
             clip = VideoFileClip(input_path)
@@ -56,11 +53,11 @@ class MovieConverter:
             # クリップを閉じる（リソース解放）
             clip.close()
 
-            logger.info(f"変換完了: {output_path}")
+            self.logger.info(f"変換完了: {output_path}")
             return True
 
         except Exception as e:
-            logger.error(f"変換中にエラーが発生しました: {str(e)}")
+            self.logger.error(f"変換中にエラーが発生しました: {str(e)}")
             return False
 
     def batch_convert(self, file_paths: List[str]) -> Dict[str, bool]:
@@ -76,10 +73,10 @@ class MovieConverter:
         results = {}
 
         if not file_paths:
-            logger.warning("変換対象ファイルが指定されていません")
+            self.logger.warning("変換対象ファイルが指定されていません")
             return results
 
-        logger.info(f"{len(file_paths)}個のファイルの変換を開始します")
+        self.logger.info(f"{len(file_paths)}個のファイルの変換を開始します")
 
         # 各ファイルを順番に変換
         for path in file_paths:
@@ -88,6 +85,6 @@ class MovieConverter:
 
         # 結果サマリーを作成
         success_count = sum(1 for result in results.values() if result)
-        logger.info(f"変換完了: {success_count}/{len(file_paths)} 成功")
+        self.logger.info(f"変換完了: {success_count}/{len(file_paths)} 成功")
 
         return results

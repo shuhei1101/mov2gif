@@ -4,10 +4,8 @@
 
 import tkinter as tk
 from tkinter import filedialog
-import logging
 
-# ロガーの設定
-logger = logging.getLogger(__name__)
+from mov2gif.app_logger import AppLogger
 
 
 class FileSelector:
@@ -15,11 +13,11 @@ class FileSelector:
     tkinterを使用してファイル選択ダイアログを表示するクラス
     """
 
-    def __init__(self):
+    def __init__(self, logger: AppLogger):
         """
         FileSelectorのコンストラクタ
         """
-        pass
+        self.logger = logger
 
     def show_dialog(self) -> str:
         """
@@ -43,14 +41,14 @@ class FileSelector:
             root.destroy()
 
             if file_path:
-                logger.info(f"ファイルが選択されました: {file_path}")
+                self.logger.info(f"ファイルが選択されました: {file_path}")
             else:
-                logger.info("ファイル選択がキャンセルされました")
+                self.logger.info("ファイル選択がキャンセルされました")
 
             return file_path
 
         except Exception as e:
-            logger.error(
+            self.logger.error(
                 f"ファイル選択ダイアログ表示中にエラーが発生しました: {str(e)}"
             )
             return ""
