@@ -1,0 +1,13 @@
+/output/*
+/log/*
+__pycache__/
+*.pyc
+/.venv/
+/cache/*
+Pipfile
+Pipfile.lock
+.DS_Store
+tmp/*
+.env
+.egg-info
+.coverage
