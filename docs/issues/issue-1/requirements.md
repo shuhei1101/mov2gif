@@ -19,6 +19,7 @@
   - [6.4. `App`クラス(新規)](#64-appクラス新規)
 - [7. UML](#7-uml)
   - [ユースケース図](#ユースケース図)
+  - [フォルダ構成](#フォルダ構成)
   - [7.1. シーケンス図](#71-シーケンス図)
   - [7.2. クラス図](#72-クラス図)
 - [8. タスク](#8-タスク)
@@ -33,6 +34,7 @@
 - 内容: 
   - movファイルパスをconfig.pyに配列で記載すると、一気にgifに変換してくれる
   - movファイルパスがconfig.pyに記載されていない場合は、tkinterでファイル選択ダイアログを表示し、選択したmovファイルをgifに変換する
+  - mp4ファイルもgifに変換する機能を実装してください。
 
 ## 4. 機能要件/非機能要件
 ### 4.1. 機能要件
@@ -171,6 +173,30 @@ graph TD
     
     UC1 --> F1
     UC2 --> F1
+```
+
+### フォルダ構成
+```plaintext
+mov2gif/
+├── README.md
+├── requirements.txt
+├── setup.py
+├── mov2gif/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── config_reader.py
+│   ├── file_selector.py
+│   ├── movie_converter.py
+│   ├── config/
+│       ├── __init__.py
+│       ├── config.py
+│       └── config.py.sample
+└── tests/
+    ├── __init__.py
+    ├── test_config_reader.py
+    ├── test_file_selector.py
+    ├── test_movie_converter.py
+    └── test_main.py
 ```
 
 ### 7.1. シーケンス図

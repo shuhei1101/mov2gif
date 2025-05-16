@@ -1,0 +1,17 @@
+README.md
+setup.py
+mov2gif/__init__.py
+mov2gif/config_reader.py
+mov2gif/file_selector.py
+mov2gif/main.py
+mov2gif/movie_converter.py
+mov2gif.egg-info/PKG-INFO
+mov2gif.egg-info/SOURCES.txt
+mov2gif.egg-info/dependency_links.txt
+mov2gif.egg-info/top_level.txt
+mov2gif/config/__init__.py
+mov2gif/config/config.py
+tests/test_config_reader.py
+tests/test_file_selector.py
+tests/test_main.py
+tests/test_movie_converter.py
