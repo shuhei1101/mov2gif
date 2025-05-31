@@ -1,3 +1,4 @@
+#!/Users/nishikawashuhei/nishikawa/30_repos/mov2gif/.venv/bin/python3
 """
 アプリケーションのメインクラスとエントリーポイント
 """
